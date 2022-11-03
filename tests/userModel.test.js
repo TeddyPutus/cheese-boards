@@ -12,6 +12,8 @@ const { User, Board, Cheese} = require('../models');
 describe("Does the User Model work?", () => {
 
     test('User table exists once we sync User model', async () => {
+        await db.query('DROP TABLE IF EXISTS Boards');
+        await db.query('DROP TABLE IF EXISTS Cheeses');
         await db.query('DROP TABLE IF EXISTS Users');
         await User.sync();
         const data = await db.getQueryInterface().showAllSchemas();
@@ -54,6 +56,9 @@ describe("Does the User Model work?", () => {
         await User.destroy({where : {name:"Teddy"}});
 
         const [data, meta] = await db.query('SELECT * FROM Users');
+
+        await db.query('DROP TABLE IF EXISTS Users');
+
         expect(data.length).toBe(1);
     })
 

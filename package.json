@@ -4,7 +4,10 @@
   "description": "A Sequelize DB for users to collect cheeses and place them on boards",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "test:userModel": "jest ./tests/userModel --silent --runInBand --verbose",
+    "test:cheeseModel": "jest ./tests/cheeseModel --silent --runInBand --verbose",
+    "test:boardModel": "jest ./tests/boardModel --silent --runInBand --verbose"
   },
   "repository": {
     "type": "git",
