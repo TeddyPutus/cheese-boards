@@ -5,11 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll",
-    "test:userModel": "jest ./tests/userModel --silent --runInBand --verbose",
-    "test:cheeseModel": "jest ./tests/cheeseModel --silent --runInBand --verbose",
-    "test:boardModel": "jest ./tests/boardModel --silent --runInBand --verbose",
-    "test:userBoardAssociation": "jest ./tests/userBoardAssociation --silent --runInBand --verbose",
-    "test:boardCheeseAssociation": "jest ./tests/boardCheeseAssociation --silent --runInBand --verbose",
     "test:seededTests": "jest ./tests/seededTests --silent --runInBand --verbose"
   },
   "repository": {

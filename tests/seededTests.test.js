@@ -82,7 +82,7 @@ describe("Board model CRUD operations work", () => {
         expect(data[0].rating).toBe(29);
     })
 
-    test('User can be updated and contains the information we expect', async () => {
+    test('Board can be updated and contains the information we expect', async () => {
 
         await Board.update({type:"Updated custom board", description:"Updated cheese", rating:1}, {where:{type:"Teds custom board"}})
 
@@ -122,7 +122,7 @@ describe("Cheese model CRUD operations work", () => {
         expect(data[0].description).toBe('The best of the best');
     })
 
-    test('User can be updated and contains the information we expect', async () => {
+    test('Cheese can be updated and contains the information we expect', async () => {
 
         await Cheese.update({title:"Smoked Cheddar", description:"A variation of the best"}, {where:{title:"Vintage Cheddar"}})
 
@@ -145,7 +145,7 @@ describe("Cheese model CRUD operations work", () => {
 
 describe("One-to-many association test: User and Board", () => {
 
-    test('Adding many cheeses to one user works', async () => {
+    test('Adding many boards to one user works', async () => {
         
         const user =  await User.findByPk(6); //this is user Millie
         
@@ -200,15 +200,15 @@ describe("Many-to-many association test: Board and Cheese", () => {
     })
 
 
-    test('Eager loading with the Gourmet Board, will give use every cheese in the cheese table', async () => {
-          const boardEagerLoaded = await Board.findAll({include: Cheese});
+    test('Eager loading with the Gourmet Board, will give every cheese in the cheese table', async () => {
+        const boardEagerLoaded = await Board.findAll({include: Cheese});
 
         expect(boardEagerLoaded[0].Cheeses.length).toBe(7);
     });
 
-    test('Eager loading with the Cheddar cheese, will give use every board in the board table', async () => {
+    test('Eager loading with the Cheddar cheese, will give every board in the board table', async () => {
         const cheeseEagerLoaded = await Cheese.findAll({include: Board});
 
-      expect(cheeseEagerLoaded[0].Boards.length).toBe(5);
+        expect(cheeseEagerLoaded[0].Boards.length).toBe(5);
   });
 });
