@@ -167,3 +167,48 @@ describe("One-to-many association test: User and Board", () => {
         
     });
 });
+
+describe("Many-to-many association test: Board and Cheese", () => {
+
+    test('Adding many cheeses to one board works', async () => {
+        
+        const cheeseList = await Cheese.findAll()
+        
+
+        const boardList = await Board.findAll();
+        await boardList[0].addCheeses(cheeseList);
+
+        let cheeseRetrieved = [];
+        (await boardList[0].getCheeses()).map(b => cheeseRetrieved.push(b.toJSON()))
+
+        expect(cheeseRetrieved.length).toBe(7);
+    })
+
+    test('Adding many boards to one cheese works', async () => {
+        const cheeseList = await Cheese.findAll()
+        
+
+        const boardList = await Board.findAll();
+        await boardList[0].addCheeses(cheeseList);
+
+        await cheeseList[0].addBoards(boardList);
+
+        let boardRetrieved = [];
+        (await cheeseList[0].getBoards()).map(b => boardRetrieved.push(b.toJSON()))
+
+        expect(boardRetrieved.length).toBe(5);
+    })
+
+
+    test('Eager loading with the Gourmet Board, will give use every cheese in the cheese table', async () => {
+          const boardEagerLoaded = await Board.findAll({include: Cheese});
+
+        expect(boardEagerLoaded[0].Cheeses.length).toBe(7);
+    });
+
+    test('Eager loading with the Cheddar cheese, will give use every board in the board table', async () => {
+        const cheeseEagerLoaded = await Cheese.findAll({include: Board});
+
+      expect(cheeseEagerLoaded[0].Boards.length).toBe(5);
+  });
+});
