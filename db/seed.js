@@ -8,11 +8,11 @@ async function seed(){
     });
 
     await Board.bulkCreate([
-        {type:"Gourmet Board", description:"Various cheese", rating:10},
-        {type:"Aged Board", description:"Various cheese in the shape of a platypus", rating:10000},
-        {type:"Pungent Board", description:"Various cheese in the shape of a platypus", rating:10000},
-        {type:"Smoked Board", description:"Various cheese in the shape of a platypus", rating:10000},
-        {type:"Italian Board", description:"Various cheese in the shape of a platypus", rating:10000}
+        {type:"Gourmet Board", description:"Gourmet cheese", rating:10},
+        {type:"Aged Board", description:"Old cheese", rating:10000},
+        {type:"Pungent Board", description:"Cheese of the strongest aromas", rating:10000},
+        {type:"Smoked Board", description:"Smoked cheeses", rating:10000},
+        {type:"Continental Board", description:"Cheese of the continent", rating:10000}
     ]);
 
     await User.bulkCreate([
@@ -34,6 +34,5 @@ async function seed(){
         {title:"Halloumi", description:"Squeaky"}
     ]);
 }
-
-module.exports = seed;
 // seed()
+module.exports = seed;

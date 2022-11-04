@@ -104,3 +104,70 @@ describe("Many-to-many association test: Board and Cheese", () => {
     //     expect(userEagerLoaded[0].Boards.length).toBe(2);
     // });
 });
+
+
+
+const db = require('../db/db');
+const { User, Board, Cheese} = require('../models');
+const seed = require('../db/seed');
+const { describe } = require('../models/board.model');
+
+
+beforeAll(async () => await seed());
+
+describe("Do the tables appear in the database after seeding?", () => {
+
+    test('User table exists', async () => {
+        const data = await db.getQueryInterface().showAllSchemas();
+        expect(data[0].name).toBe('Users');
+    })
+
+    test('Board table exists', async () => {
+        const data = await db.getQueryInterface().showAllSchemas();
+        expect(data[1].name).toBe('Boards');
+    })
+
+    test('Cheese table exists', async () => {
+        const data = await db.getQueryInterface().showAllSchemas();
+        expect(data[2].name).toBe('Cheeses');
+    })
+})
+
+describe("User model CRUD operations work", () => {
+    test('Seeded user exists and contains correct information', async () => {
+        const [data, meta] = await db.query('SELECT * FROM Users WHERE name = "Teddy"');
+        expect(data.length).toBe(1);
+        expect(data[0].name).toBe('Teddy');
+        expect(data[0].email).toBe('teddyputus1@gmail.com');
+    })
+
+    test('New user is created successfully', async () => {
+        
+        await User.create({name:"Ollie", email:"ollieThaDog@gmail.com"})
+
+        const [data, meta] = await db.query('SELECT * FROM Users WHERE name = "Ollie"');
+        expect(data.length).toBe(1);
+        expect(data[0].name).toBe('Ollie');
+        expect(data[0].email).toBe('ollieThaDog@gmail.com');
+    })
+
+    test('User can be updated and contains the information we expect', async () => {
+
+        await User.update({name:"Sak", email:"sakPutus@google.com"}, {where:{name:"Teddy"}})
+
+        const [data, meta] = await db.query('SELECT * FROM Users WHERE name = "Sak"');
+
+        expect(data[0].name).toBe('Sak');
+        expect(data[0].email).toBe('sakPutus@google.com');
+    })
+
+
+    test('User is deleted', async () => {
+        await User.destroy({where : {name:"Ollie"}});
+
+        const [data, meta] = await db.query('SELECT * FROM Users');
+
+        expect(data.length).toBe(6);
+    })
+
+})
