@@ -6,15 +6,28 @@ class Board extends Model{}
 Board.init({
     type:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        validate:{
+            notEmpty: true,
+            notNull: true
+        }
     },
     description:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        validate:{
+            notEmpty: true,
+            notNull: true
+        }
     },
     rating:{
         type:DataTypes.INTEGER,
-        allowNull:false
+        allowNull:false,
+        validate:{
+            isNumeric: true,
+            notEmpty: true,
+            notNull: true
+        }
     }
 
 }, {sequelize:db});

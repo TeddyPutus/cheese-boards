@@ -6,11 +6,19 @@ class Cheese extends Model{}
 Cheese.init({
     title:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        validate:{
+            notEmpty: true,
+            notNull: true
+        }
     },
     description:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        validate:{
+            notEmpty: true,
+            notNull: true
+        }
     }
 
 }, {sequelize:db});

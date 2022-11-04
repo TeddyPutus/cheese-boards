@@ -6,11 +6,23 @@ class User extends Model{}
 User.init({
     name:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        validate:{
+            isAlpha: true,
+            notEmpty: true,
+            notNull: true
+        }
+        
     },
     email:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        validate:{
+            isEmail: true,
+            notEmpty: true,
+            notNull: true 
+        }
+            
     }
 
 }, {sequelize:db});

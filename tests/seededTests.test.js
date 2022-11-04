@@ -60,6 +60,29 @@ describe("User model CRUD operations work", () => {
         expect(data.length).toBe(6);
     })
 
+    test('New user must have an email in email field', async () => {
+        expect(User.create({name:"Ollie", email:"blah.com"})).rejects.toThrow(Error);
+    })
+
+    test('New user must have a name made of alpha characters', async () => {
+        expect(User.create({name:1, email:"blah@blah.com"})).rejects.toThrow(Error);
+    })
+
+    test('New user email field cant be empty', async () => {
+        expect(User.create({name:"Ollie", email:""})).rejects.toThrow(Error);
+    })
+
+    test('New user name field cant be empty', async () => {
+        expect(User.create({name:"", email:"blah@blah.com"})).rejects.toThrow(Error);
+    })
+
+    test('New user email field cant be null', async () => {
+        expect(User.create({name:"Ollie", email:null})).rejects.toThrow(Error);
+    })
+
+    test('New user name field cant be null', async () => {
+        expect(User.create({name:"", email:null})).rejects.toThrow(Error);
+    })
 })
 
 describe("Board model CRUD operations work", () => {
@@ -102,6 +125,33 @@ describe("Board model CRUD operations work", () => {
         expect(data.length).toBe(5);
     })
 
+    test('New board type field cant be empty', async () => {
+        expect(Board.create({type:"", description:"Confused cheese", rating:29})).rejects.toThrow(Error);
+    })
+
+    test('New board type field cant be null', async () => {
+        expect(Board.create({type:null, description:"Confused cheese", rating:29})).rejects.toThrow(Error);
+    })
+
+    test('New board description field cant be empty', async () => {
+        expect(Board.create({type:"blah", description:"", rating:29})).rejects.toThrow(Error);
+    })
+
+    test('New board description field cant be null', async () => {
+        expect(Board.create({type:"blah", description:null, rating:29})).rejects.toThrow(Error);
+    })
+
+    test('New board rating field cant be empty', async () => {
+        expect(Board.create({type:"blah", description:"Confused cheese", rating:""})).rejects.toThrow(Error);
+    })
+
+    test('New board rating field cant be null', async () => {
+        expect(Board.create({type:"blah", description:"Confused cheese", rating:null})).rejects.toThrow(Error);
+    })
+
+    test('New board rating field must be a number', async () => {
+        expect(Board.create({type:"blah", description:"Confused cheese", rating:"blah"})).rejects.toThrow(Error);
+    })
 })
 
 describe("Cheese model CRUD operations work", () => {
@@ -141,6 +191,21 @@ describe("Cheese model CRUD operations work", () => {
         expect(data.length).toBe(7);
     })
 
+    test('New cheese title field cant be empty', async () => {
+        expect(Cheese.create({title:"", description:"The best of the best"})).rejects.toThrow(Error);
+    })
+
+    test('New cheese title field cant be null', async () => {
+        expect(Cheese.create({title:null, description:"The best of the best"})).rejects.toThrow(Error);
+    })
+
+    test('New cheese description field cant be empty', async () => {
+        expect(Cheese.create({title:"blah", description:""})).rejects.toThrow(Error);
+    })
+
+    test('New cheese description field cant be null', async () => {
+        expect(Cheese.create({title:"blah", description:null})).rejects.toThrow(Error);
+    })
 })
 
 describe("One-to-many association test: User and Board", () => {
