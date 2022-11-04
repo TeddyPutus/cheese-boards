@@ -142,3 +142,28 @@ describe("Cheese model CRUD operations work", () => {
     })
 
 })
+
+describe("One-to-many association test: User and Board", () => {
+
+    test('Adding many cheeses to one user works', async () => {
+        
+        const user =  await User.findByPk(6); //this is user Millie
+        
+
+        const boardList = await Board.findAll();
+        await user.addBoards(boardList); //add all the cheese boards (it's what she would want)
+
+        let BoardsRetrieved = [];
+        (await user.getBoards()).map(b => BoardsRetrieved.push(b.toJSON()))
+
+        expect(BoardsRetrieved.length).toBe(5);
+    })
+
+    test('Eager loading returns boards associated with the User', async () => {
+
+        const userEagerLoaded = await User.findByPk(6, {include: Board});
+
+        expect(userEagerLoaded.Boards.length).toBe(5);
+        
+    });
+});
