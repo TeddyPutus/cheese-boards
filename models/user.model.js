@@ -8,7 +8,8 @@ User.init({
         type:DataTypes.STRING,
         allowNull:false,
         validate:{
-            isAlpha: true,
+            // isAlpha: true,
+            is: /^[A-Za-z ]/i,
             notEmpty: true,
             notNull: true
         }

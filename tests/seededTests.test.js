@@ -51,7 +51,6 @@ describe("User model CRUD operations work", () => {
         expect(data[0].email).toBe('sakPutus@google.com');
     })
 
-
     test('User is deleted', async () => {
         await User.destroy({where : {name:"Ollie"}});
 
@@ -60,11 +59,21 @@ describe("User model CRUD operations work", () => {
         expect(data.length).toBe(6);
     })
 
+    test('New user can have first and last name', async () => {
+        
+        await User.create({name:"Blue Putus", email:"blue@gmail.com"})
+
+        const [data, meta] = await db.query('SELECT * FROM Users WHERE name = "Blue Putus"');
+        expect(data.length).toBe(1);
+        expect(data[0].name).toBe('Blue Putus');
+        expect(data[0].email).toBe('blue@gmail.com');
+    })
+
     test('New user must have an email in email field', async () => {
         expect(User.create({name:"Ollie", email:"blah.com"})).rejects.toThrow(Error);
     })
 
-    test('New user must have a name made of alpha characters', async () => {
+    test('New user must have a name made of alpha characters and spaces', async () => {
         expect(User.create({name:1, email:"blah@blah.com"})).rejects.toThrow(Error);
     })
 
