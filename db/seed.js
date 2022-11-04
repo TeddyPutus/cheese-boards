@@ -34,5 +34,5 @@ async function seed(){
         {title:"Halloumi", description:"Squeaky"}
     ]);
 }
-// seed()
+
 module.exports = seed;
